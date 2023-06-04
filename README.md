@@ -15,3 +15,7 @@ Run `npm start` for a dev server exporting API at http://localhost:8080/.
 Run `cd angular-15-client`
 Run `npm i`
 Run `npm start`. Navigate to `http://localhost:8081/`.
+
+## Database
+
+you don't need to create or import databse once you run server it will automatically creates `test_db`
