@@ -1,0 +1,96 @@
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <header class="jumbotron">
+    <h3>
+      <strong>{{ currentUser.username }}</strong> Profile
+    </h3>
+  </header>
+  <button (click)="toggleEdit()">Edit</button>
+
+  <div>
+    <img src="http://localhost:8080/uploads/{{currentUser.profileImg}}" alt="">
+  </div>
+  <p>
+    <strong>Firstname:</strong>
+    {{ currentUser.firstname }}
+  </p>
+  <p>
+    <strong>Lastname:</strong>
+    {{ currentUser.lastname }}
+  </p>
+  <p>
+    <strong>Email:</strong>
+    {{ currentUser.email }}
+  </p>
+  <strong>Roles:</strong>
+  <ul>
+    <li *ngFor="let role of currentUser.roles">
+      {{ role }}
+    </li>
+  </ul>
+
+  <div class="edit" *ngIf="isEdit">
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required minlength="3"
+          maxlength="20" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.errors }" />
+        <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
+          <div *ngIf="username.errors['required']">Username is required</div>
+          <div *ngIf="username.errors['minlength']">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors['maxlength']">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <input type="text" class="form-control" name="firstname" [(ngModel)]="form.firstname" required minlength="3"
+          maxlength="20" #firstname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstname.errors }" />
+        <div class="invalid-feedback" *ngIf="firstname.errors && f.submitted">
+          <div *ngIf="firstname.errors['required']">Firstname is required</div>
+          <div *ngIf="firstname.errors['minlength']">
+            Firstname must be at least 3 characters
+          </div>
+          <div *ngIf="firstname.errors['maxlength']">
+            Firstname must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <input type="text" class="form-control" name="lastname" [(ngModel)]="form.lastname" required minlength="3"
+          maxlength="20" #lastname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastname.errors }" />
+        <div class="invalid-feedback" *ngIf="lastname.errors && f.submitted">
+          <div *ngIf="lastname.errors['required']">Lastname is required</div>
+          <div *ngIf="lastname.errors['minlength']">
+            Lastname must be at least 3 characters
+          </div>
+          <div *ngIf="lastname.errors['maxlength']">
+            Lastname must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+        <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors['required']">Email is required</div>
+          <div *ngIf="email.errors['email']">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Update</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
